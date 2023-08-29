@@ -1,7 +1,7 @@
 # Calibre 中文文件名修正
 
-使用方法看[kovidgoyal/calibre](https://github.com/kovidgoyal/calibre)
-感谢kovidgoyal
+使用方法看[kurikomoe/calibre](https://github.com/kurikomoe/calibre-utf8-path/) 
+感谢kovidgoyal还有kurikomoe
 本仓库将上游发布release的时候同步
 
 # calibre
