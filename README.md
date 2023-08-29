@@ -1,3 +1,9 @@
+# Calibre 中文文件名修正
+
+使用方法看[kovidgoyal/calibre](https://github.com/kovidgoyal/calibre)
+感谢kovidgoyal
+本仓库将上游发布release的时候同步
+
 # calibre
 
 <img align="left" src="https://raw.githubusercontent.com/kovidgoyal/calibre/master/resources/images/lt.png" height="200" width="200"/>
