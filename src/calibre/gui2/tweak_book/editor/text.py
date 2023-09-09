@@ -35,7 +35,7 @@ from calibre.gui2.tweak_book.editor.themes import (
 from calibre.gui2.tweak_book.widgets import PARAGRAPH_SEPARATOR, PlainTextEdit
 from calibre.spell.break_iterator import index_of
 from calibre.utils.icu import (
-    capitalize, lower, safe_chr, string_length, swapcase, upper
+    capitalize, lower, safe_chr, string_length, swapcase, upper, utf16_length
 )
 from calibre.utils.img import image_to_data
 from calibre.utils.titlecase import titlecase
@@ -470,6 +470,7 @@ class TextEdit(PlainTextEdit):
         start, end = m.span()
         if start == end:
             return False
+        end = start + utf16_length(raw[start:end])
         if wrap and not complete:
             if reverse:
                 textpos = c.anchor()
@@ -502,19 +503,20 @@ class TextEdit(PlainTextEdit):
         if wrap and not complete:
             pos = QTextCursor.MoveOperation.End if reverse else QTextCursor.MoveOperation.Start
         c.movePosition(pos, QTextCursor.MoveMode.KeepAnchor)
+        raw = str(c.selectedText()).replace(PARAGRAPH_SEPARATOR, '\n').rstrip('\0')
         if hasattr(self.smarts, 'find_text'):
             self.highlighter.join()
             found, start, end = self.smarts.find_text(pat, c, reverse)
             if not found:
                 return False
         else:
-            raw = str(c.selectedText()).replace(PARAGRAPH_SEPARATOR, '\n').rstrip('\0')
             m = pat.search(raw)
             if m is None:
                 return False
             start, end = m.span()
             if start == end:
                 return False
+        end = start + utf16_length(raw[start:end])
         if reverse:
             start, end = end, start
         c.clearSelection()
