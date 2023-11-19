@@ -21,9 +21,9 @@ from calibre.gui2 import error_dialog, is_dark_theme, safe_open_url
 from calibre.gui2.dialogs.confirm_delete import confirm
 from calibre.gui2.gestures import GestureManager
 from calibre.gui2.library.annotations import (
-    Details, Export as ExportBase, render_highlight_as_text, render_notes,
+    ChapterGroup, Details, Export as ExportBase, render_notes,
 )
-from calibre.gui2.viewer import link_prefix_for_location_links
+from calibre.gui2.viewer import get_boss, link_prefix_for_location_links
 from calibre.gui2.viewer.config import vprefs
 from calibre.gui2.viewer.search import SearchInput
 from calibre.gui2.viewer.shortcuts import get_shortcut_for, index_to_key_sequence
@@ -120,38 +120,6 @@ def decoration_for_style(palette, style, icon_size, device_pixel_ratio, is_dark)
         ans = QColor(style['background-color'])
     decoration_cache[style_key] = ans
     return ans
-
-
-class ChapterGroup:
-
-    def __init__(self, title='', level=0):
-        self.title = title
-        self.subgroups = {}
-        self.annotations = []
-        self.level = level
-
-    def add_annot(self, a):
-        titles = a.get('toc_family_titles', (_('Unknown chapter'),))
-        node = self
-        for title in titles:
-            node = node.group_for_title(title)
-        node.annotations.append(a)
-
-    def group_for_title(self, title):
-        ans = self.subgroups.get(title)
-        if ans is None:
-            ans = ChapterGroup(title, self.level+1)
-            self.subgroups[title] = ans
-        return ans
-
-    def render_as_text(self, lines, as_markdown, link_prefix):
-        if self.title:
-            lines.append('#' * self.level + ' ' + self.title)
-            lines.append('')
-        for hl in self.annotations:
-            render_highlight_as_text(hl, lines, as_markdown=as_markdown, link_prefix=link_prefix)
-        for sg in self.subgroups.values():
-            sg.render_as_text(lines, as_markdown, link_prefix)
 
 
 class Export(ExportBase):
@@ -485,7 +453,6 @@ class NotesDisplay(Details):
 
 class HighlightsPanel(QWidget):
 
-    jump_to_cfi = pyqtSignal(object)
     request_highlight_action = pyqtSignal(object, object)
     web_action = pyqtSignal(object, object)
     toggle_requested = pyqtSignal()
@@ -563,6 +530,9 @@ class HighlightsPanel(QWidget):
         self.highlights.setFocus(Qt.FocusReason.OtherFocusReason)
 
     def jump_to_highlight(self, highlight):
+        boss = get_boss()
+        if boss.check_for_read_aloud(_('the location of this highlight')):
+            return
         self.request_highlight_action.emit(highlight['uuid'], 'goto')
 
     def current_highlight_changed(self, highlight):
@@ -577,6 +547,9 @@ class HighlightsPanel(QWidget):
             'No highlight is currently selected'), show=True)
 
     def edit_highlight(self):
+        boss = get_boss()
+        if boss.check_for_read_aloud(_('the location of this highlight')):
+            return
         h = self.highlights.current_highlight
         if h is None:
             return self.no_selected_highlight()

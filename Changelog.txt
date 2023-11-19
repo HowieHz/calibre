@@ -23,6 +23,113 @@
 # - title by author
 # }}}
 
+{{{ 7.0.0 2023-11-17
+
+:: new features
+
+- [major] For details on the major changes in calibre between 7.0 and 6.0, see https://calibre-ebook.com/new-in/sixteen
+
+- [major] The ability to add notes to any author, tag, series, etc. in calibre with links and images
+
+- [2040487] E-book viewer: Add support for HTML image maps
+
+- Content server home page: Show the three most recently added books in the default library
+
+- Content server: Add button to return to book details page at top level of controls
+
+- Content server: Book details: Open links in comments fields in the same window rather than a new window
+
+- Add a "Show items in selected books" choice to Manage tags and Manage authors
+
+- [2042804] Show the previously used language, if any, second in the language selection drop down
+
+:: bug fixes
+
+- [2043415] Metadata download: Fix downloads from Google not working in Europe because of the GDPR
+
+- [2042815] Fix editing dates with days sometimes off by one day
+
+- Edit book: Fix highlighting for special characters not visible when the cursor is on the line with the special character
+
+- [2043248] Fix embedding metadata showing infinite error dialogs on windows if a file is locked by another program
+
+- [2040074] PDF Output: Fix an error when trying to set header or footer with an input document that has invalid content after the main body
+
+- [2042791] E-book viewer: Read aloud: Fix clicking on empty spaces causing read aloud to restart from beginning of chapter
+
+- Book details: Fix Manage authors via context menu not working
+
+- [2041848] E-book viewer: Showing chrome should close an active footnote popup first and only show chrome if the user repeats the action
+
+- [2041745] Fix very slow metadata updates on some PDF files
+
+- [1262875] Catalogs: Do not erase any tags the user adds to a catalog book entry when the catalog is re-generated
+
+- [2042748] Linux installer: Fix downloading of signatures for older versions
+
+- [2041357] Fix editing non-active Virtual library changes sort of book list
+
+:: improved recipes
+- Financial Times
+- National Geographic
+- Hamilton Spectator
+- Times of India
+- MIT Tech Review
+- Bloomberg
+- Washington Post
+- Project Syndicate
+- Cumhuriyet
+- Foreign Affairs
+- Harvard Business Review
+- Wall Street Journal
+
+:: new recipes
+- Bookforum, Kirkus Reviews and Poetry Magazine by ping
+
+}}}
+
+{{{ 6.29.0 2023-10-20
+
+:: new features
+
+- [2038760] E-book viewer: Add a command line flag --new-instance to force the viewer to open a new window even if the option to always use a single viewer window is set
+
+- [2038862] E-book viewer: Image popup: Add a checkbox to remember the last used zoom level
+
+:: bug fixes
+
+- [2039336] Annotations browser: Fix exporting highlights in markdown not including all chapter titles for books with only a single highlight per chapter or a multi level ToC
+
+- [2038747] E-book viewer: Fix a regression that could cause the viewer to enter an infinite loop when displaying the result of a search that has only one match that is not found
+
+- [2038747] E-book viewer: Fix the occasional search result being marked as not found even though it is found
+
+- [2039474] TXTZ Output plugin: Only keep images if the text format is one that can reference images
+
+- [2038848] TXTZ Output: Fix cover not being properly identified in the generated TXTZ metadata
+
+- [2038575] FB2 Input: Fix the "Annotations" section not showing up in the Table of Contents
+
+- [2039395] Linux: Content server: Do not call listen on pre-activated sockets
+
+- Fix sort order of similarly-named hierarchical categories
+
+- [2038778] Fix a regression that broke reading of covers from HTMLZ and TXTZ files
+
+:: improved recipes
+- Wall Street Journal
+- Scientific American
+- 1843
+- Financial Times
+- Spectator Magazine
+- El Diplo
+- Wasshington Post
+- national Geographic
+
+:: new recipes
+- Project Syndicate, Scroll.in and Newslaundry by unkn0wn
+}}}
+
 {{{ 6.28.1 2023-10-07
 
 :: new features
@@ -610,7 +717,7 @@
 
 - [2009304] Allow display of columns built from other columns as comments in Book details
 
-- Comments editor: Add a shortcut for "Paste and match style" (Ctrl+Shift+v)
+- Comments editor: Add a shortcut for "Paste and match style" (Ctrl+Shift+V)
 
 :: bug fixes
 
@@ -1623,7 +1730,7 @@ Then, when searching the Tag browser, press Ctrl+Alt+Shift+F to restrict the dis
 
 - [1959207] E-book viewer: When using Read aloud do not automatically lookup the highlighted word until read aloud is paused or stopped
 
-- E-book viewer: Fix Ctrl+p shortcut for printing not working
+- E-book viewer: Fix Ctrl+P shortcut for printing not working
 
 - [1958882] Show an error when viewing a specific format and the file is missing
 
