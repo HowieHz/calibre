@@ -118,6 +118,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
     def __init__(self, opts, parent=None, gui_debug=None):
         MainWindow.__init__(self, opts, parent=parent, disable_automatic_gc=True)
+        self.setVisible(False)
         self.setWindowIcon(QApplication.instance().windowIcon())
         self.extra_files_watcher = ExtraFilesWatcher(self)
         self.jobs_pointer = Pointer(self)
@@ -372,7 +373,7 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
 
         # ########################## Cover Flow ################################
 
-        CoverFlowMixin.init_cover_flow_mixin(self)
+        CoverFlowMixin.__init__(self)
 
         self._calculated_available_height = min(max_available_height()-15,
                 self.height())
@@ -396,13 +397,13 @@ class Main(MainWindow, MainWindowMixin, DeviceMixin, EmailMixin,  # {{{
             QTimer.singleShot(0, self.hide_windows)
             show_gui = False
             setattr(self, '__systray_minimized', True)
-        if show_gui:
-            self.show()
         self.read_settings()
 
         self.finalize_layout()
         self.bars_manager.start_animation()
         self.set_window_title()
+        if show_gui:
+            self.show()
 
         for ac in self.iactions.values():
             try:
